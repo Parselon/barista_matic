@@ -3,6 +3,7 @@ from typing import Dict, Tuple, Union, Iterable
 from operator import attrgetter
 
 from barista_matic.domain import model
+from barista_matic.adapters import repository
 
 
 def sort_by_attribute(items: Iterable[Union[model.Ingredient, model.Drink]], attribute: str) -> Iterable[Union[model.Ingredient, model.Drink]]:
@@ -77,7 +78,7 @@ class Menu:
 
 class BaristaMatic:
     """Barista Matic service. Depends on a repository, to get ingredients and drinks"""
-    def __init__(self, repository):
+    def __init__(self, repository: repository.AbstractRepository):
         self.repository = repository
 
     def get_inventory(self) -> Tuple[model.Ingredient]:

@@ -28,7 +28,7 @@ def then_the_ingredient_has_the_expected_stock(ingredient, expected_stock):
 def test_barista_get_inventory_on_empty_repository():
     barista_matic = given_a_baristamatic_with_fake_repository()
 
-    then_the_baristamatic_returns_the_ingredients(barista_matic, tuple())
+    helpers.then_the_baristamatic_returns_the_ingredients(barista_matic, tuple())
 
 
 def test_barista_matic_service_get_inventory_returns_ordered_ingredients():
@@ -38,13 +38,13 @@ def test_barista_matic_service_get_inventory_returns_ordered_ingredients():
         ingredients=[ingredient_2, ingredient_1]
     )
 
-    then_the_baristamatic_returns_the_ingredients(barista_matic, (ingredient_1, ingredient_2))
+    helpers.then_the_baristamatic_returns_the_ingredients(barista_matic, (ingredient_1, ingredient_2))
 
 
 def test_barista_get_menu_on_empty_repository():
     barista_matic = given_a_baristamatic_with_fake_repository()
 
-    then_the_barista_matic_has_the_expected_menu(barista_matic, services.Menu({}))
+    helpers.then_the_barista_matic_has_the_expected_menu(barista_matic, services.Menu({}))
 
 
 def test_barista_matic_service_get_menu_returns_a_menu_with_drinks():
@@ -65,7 +65,7 @@ def test_barista_matic_service_get_menu_returns_a_menu_with_drinks():
         drinks=[drink_1, drink_2]
     )
 
-    then_the_barista_matic_has_the_expected_menu(
+    helpers.then_the_barista_matic_has_the_expected_menu(
         barista_matic,
         services.Menu({"1": drink_2, "2": drink_1})
     ) 
@@ -84,7 +84,7 @@ def test_barista_matic_service_dispense_drink_by_menu_reference():
     fake_drink = FakeDrink(name="", ingredients=set())
     barista_matic = given_a_baristamatic_with_fake_repository(drinks=[fake_drink])
 
-    dispensed_drink = when_the_barista_dispense_a_drink_by_reference(barista_matic, "1")
+    dispensed_drink = helpers.when_the_barista_dispense_a_drink_by_reference(barista_matic, "1")
 
     fake_drink.assert_was_dispensed()
     assert dispensed_drink is fake_drink
@@ -94,7 +94,7 @@ def test_barista_matic_error_when_drink_not_exists_by_reference():
     barista_matic = given_a_baristamatic_with_fake_repository()
 
     with pytest.raises(services.InvalidSelectedDrink):
-        when_the_barista_dispense_a_drink_by_reference(barista_matic, "1")
+        helpers.when_the_barista_dispense_a_drink_by_reference(barista_matic, "1")
 
 
 def test_barista_matic_get_out_of_stock_error_when_dispensing_a_drink_without_stock():
@@ -106,7 +106,7 @@ def test_barista_matic_get_out_of_stock_error_when_dispensing_a_drink_without_st
     barista_matic = given_a_baristamatic_with_fake_repository(ingredients=[an_ingredient], drinks=[a_drink])
 
     with pytest.raises(exceptions.OutOfStock) as excinfo:
-        when_the_barista_dispense_a_drink_by_reference(barista_matic, "1")
+        helpers.when_the_barista_dispense_a_drink_by_reference(barista_matic, "1")
     assert excinfo.value.drink is a_drink
 
 
