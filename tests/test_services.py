@@ -19,12 +19,6 @@ def given_a_baristamatic_with_fake_repository(ingredients=None, drinks=None):
     return helpers.given_a_baristamatic_service_with_repository(repository)
 
 
-def then_the_baristamatic_returns_the_ingredients(barista_matic, expected_ingredients):
-    assert barista_matic.get_inventory() == expected_ingredients
-
-
-def when_the_barista_dispense_a_drink_by_reference(barista_matic, drink_reference):
-    return barista_matic.dispense_drink_by_menu_reference(drink_reference)
 
 
 def then_the_ingredient_has_the_expected_stock(ingredient, expected_stock):
@@ -45,10 +39,6 @@ def test_barista_matic_service_get_inventory_returns_ordered_ingredients():
     )
 
     then_the_baristamatic_returns_the_ingredients(barista_matic, (ingredient_1, ingredient_2))
-
-
-def then_the_barista_matic_has_the_expected_menu(barista_matic, expected_menu):
-    assert barista_matic.get_menu() == expected_menu
 
 
 def test_barista_get_menu_on_empty_repository():
