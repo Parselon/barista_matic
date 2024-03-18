@@ -5,13 +5,7 @@ import pytest
 from barista_matic.domain import model
 from barista_matic.domain import exceptions
 
-
-def given_an_ingredient(name="an ingredient", quantity=10, unit_cost=1):
-    return model.Ingredient(name, quantity, unit_cost)
-
-
-def given_a_drink_with_ingredients(*ingredients: Iterable[model.DrinkIngredient], name="a drink"):
-    return model.Drink(name, set(ingredients))
+from tests import helpers
 
 
 def when_the_drink_is_dispensed(a_drink: model.Drink):
@@ -27,8 +21,8 @@ def then_the_drink_has_the_expected_cost(a_drink, expected_cost):
 
 
 def test_dispense_a_drink_updates_the_inventory():
-    an_ingredient = given_an_ingredient(quantity=10)
-    a_drink = given_a_drink_with_ingredients(
+    an_ingredient = helpers.given_an_ingredient(quantity=10)
+    a_drink = helpers.given_a_drink_with_ingredients(
         model.DrinkIngredient(an_ingredient, 2)
     )
 
@@ -38,11 +32,11 @@ def test_dispense_a_drink_updates_the_inventory():
 
 
 def test_dispense_a_drink_with_multiple_ingredients_updates_inventory():
-    ingredient_1 = given_an_ingredient(quantity=10)
-    ingredient_2 = given_an_ingredient(quantity=9)
-    ingredient_3 = given_an_ingredient(quantity=8)
+    ingredient_1 = helpers.given_an_ingredient(quantity=10)
+    ingredient_2 = helpers.given_an_ingredient(quantity=9)
+    ingredient_3 = helpers.given_an_ingredient(quantity=8)
 
-    a_drink = given_a_drink_with_ingredients(
+    a_drink = helpers.given_a_drink_with_ingredients(
         model.DrinkIngredient(ingredient_1, 1),
         model.DrinkIngredient(ingredient_2, 2),
         model.DrinkIngredient(ingredient_3, 3)
@@ -56,8 +50,8 @@ def test_dispense_a_drink_with_multiple_ingredients_updates_inventory():
 
 
 def test_dispense_a_drink_raise_outofstock_if_ingredient_is_not_enough():
-    an_ingredient = given_an_ingredient(quantity=1)
-    a_drink = given_a_drink_with_ingredients(
+    an_ingredient = helpers.given_an_ingredient(quantity=1)
+    a_drink = helpers.given_a_drink_with_ingredients(
         model.DrinkIngredient(an_ingredient, 2)
     )
 
@@ -66,11 +60,11 @@ def test_dispense_a_drink_raise_outofstock_if_ingredient_is_not_enough():
 
 
 def test_dispense_a_drink_with_multiple_ingredients_raise_outofstock_if_at_least_one_ingredient_is_not_enough():
-    ingredient_without_stock = given_an_ingredient(quantity=0)
-    ingredient_2 = given_an_ingredient(quantity=10)
-    ingredient_3 = given_an_ingredient(quantity=10)
+    ingredient_without_stock = helpers.given_an_ingredient(quantity=0)
+    ingredient_2 = helpers.given_an_ingredient(quantity=10)
+    ingredient_3 = helpers.given_an_ingredient(quantity=10)
 
-    a_drink = given_a_drink_with_ingredients(
+    a_drink = helpers.given_a_drink_with_ingredients(
         model.DrinkIngredient(ingredient_without_stock, 1),
         model.DrinkIngredient(ingredient_2, 2),
         model.DrinkIngredient(ingredient_3, 3),
@@ -81,11 +75,11 @@ def test_dispense_a_drink_with_multiple_ingredients_raise_outofstock_if_at_least
 
 
 def test_get_cost_of_a_drink_with_multiple_ingredients_computes_expected_cost():
-    ingredient_1 = given_an_ingredient(unit_cost=4.4)
-    ingredient_2 = given_an_ingredient(unit_cost=5.5)
-    ingredient_3 = given_an_ingredient(unit_cost=7.7)
+    ingredient_1 = helpers.given_an_ingredient(unit_cost=4.4)
+    ingredient_2 = helpers.given_an_ingredient(unit_cost=5.5)
+    ingredient_3 = helpers.given_an_ingredient(unit_cost=7.7)
 
-    a_drink = given_a_drink_with_ingredients(
+    a_drink = helpers.given_a_drink_with_ingredients(
         model.DrinkIngredient(ingredient_1, 1),
         model.DrinkIngredient(ingredient_2, 2),
         model.DrinkIngredient(ingredient_3, 3),
@@ -95,7 +89,7 @@ def test_get_cost_of_a_drink_with_multiple_ingredients_computes_expected_cost():
 
 
 def test_ingredients_restock():
-    an_ingredient = given_an_ingredient(quantity=6)
+    an_ingredient = helpers.given_an_ingredient(quantity=6)
 
     an_ingredient.restock_to_quantity(20)
 
