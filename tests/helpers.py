@@ -1,6 +1,7 @@
 from typing import Iterable
 from barista_matic.domain import model
 from barista_matic.service_layer import services
+from barista_matic.entrypoints.interactive_cli import InteractiveCli
 
 
 def given_an_ingredient(name="an ingredient", quantity=10, unit_cost=1) -> model.Ingredient:
@@ -13,6 +14,22 @@ def given_a_drink_with_ingredients(*ingredients: Iterable[model.DrinkIngredient]
 
 def given_a_baristamatic_service_with_repository(repository) -> services.BaristaMatic:
     return services.BaristaMatic(repository)
+
+
+def given_an_interactive_cli_for_barista_service(barista_matic) -> InteractiveCli:
+    return InteractiveCli(barista_matic)
+
+
+def when_the_interactive_cli_runs_with_user_inputs(interactive_cli, user_inputs, monkeypatch):
+    def simulate_user_inputs():
+        for user_input in user_inputs:
+            print(user_input)
+            yield user_input
+
+    inputs = simulate_user_inputs()
+    with monkeypatch.context() as patch:
+        patch.setattr('builtins.input', lambda _: next(inputs))
+        interactive_cli.execute()
 
 
 def when_the_barista_dispense_a_drink_by_reference(barista_matic, drink_reference):
@@ -31,3 +48,8 @@ def then_the_ingredient_has_the_expected_stock_in_the_db(session, ingredient_nam
     ingredient = session.query(model.Ingredient).filter(model.Ingredient.name == ingredient_name).all()
     assert ingredient
     assert ingredient[0].get_available_quantity() == expected_quantity
+
+
+def then_the_cli_output_has(capsys, expected_string):
+    cli_output = capsys.readouterr().out
+    assert expected_string in cli_output
