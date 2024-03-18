@@ -53,3 +53,25 @@ class FakeRepository(AbstractRepository):
 
     def commit(self):
         pass
+
+
+class SQLAlchemyRepository(AbstractRepository):
+    def __init__(self, session):
+        self.session = session
+
+    def add_ingredient(self, ingredient: model.Ingredient):
+        self.session.add(ingredient)
+        self.session.commit()
+
+    def add_drink(self, drink: model.Drink):
+        self.session.add(drink)
+        self.session.commit()
+
+    def get_ingredients(self) -> Set[model.Ingredient]:
+        return self.session.query(model.Ingredient).all()
+
+    def get_drinks(self) -> Set[model.Drink]:
+        return self.session.query(model.Drink).all()
+
+    def commit(self):
+        self.session.commit()
