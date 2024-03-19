@@ -13,9 +13,11 @@ from barista_matic.adapters.repository import SQLAlchemyRepository
 from barista_matic.entrypoints.interactive_cli import InteractiveCli
 from barista_matic.service_layer.services import BaristaMatic
 
+from . import settings
+
 
 def get_engine():
-    return create_engine(os.getenv("DB"))
+    return create_engine(settings.DB)
 
 
 def run_interactive_cli():

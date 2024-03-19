@@ -6,6 +6,7 @@ from abc import (
 from collections import defaultdict
 
 from barista_matic.domain import exceptions
+from barista_matic import settings
 
 
 class UserExited(Exception):
@@ -13,17 +14,19 @@ class UserExited(Exception):
 
 
 class Command(ABC):
+    """Command to be executed"""
     @abstractmethod
     def dispatch(self, barista_matic, user_input):
         pass
 
 
 class ReStock(Command):
-    to_quantity = 10
+    COMMAND_MSG = "Inventory re-stocked"
+    TO_QUANTITY = settings.RESTOCK_QUANTITY
 
     def dispatch(self, barista_service, *args):
-        barista_service.restock_all_ingredients_to_quantity(self.to_quantity)
-        print("Inventory re-stocked")
+        barista_service.restock_all_ingredients_to_quantity(self.TO_QUANTITY)
+        print(self.COMMAND_MSG)
 
 
 class ExitCli(Command):
@@ -32,29 +35,38 @@ class ExitCli(Command):
 
 
 class InvalidCommand(Command):
+    COMMAND_MSG = "Invalid selection:"
+
     def dispatch(self, _, user_input):
-        print(f"Invalid selection: {user_input}")
+        print(f"{self.COMMAND_MSG} {user_input}")
 
 
 class Dispense(Command):
+    COMMAND_MSG = "Dispensing:"
+    COMMAND_ERROR = "Out of stock:"
+
     def dispatch(self, barista_service, user_input):
         try:
             dispensed_drink = barista_service.dispense_drink_by_menu_reference(user_input)
-            print(f"Dispensing: {dispensed_drink.name}")
+            print(f"{self.COMMAND_MSG} {dispensed_drink.name}")
         except exceptions.OutOfStock as err:
-            print(f"Out of stock: {err.drink.name}")
+            print(f"{self.COMMAND_ERROR} {err.drink.name}")
 
 
 class PrintInventory(Command):
+    COMMAND_MDG = "Inventory:"
+
     def dispatch(self, barista_service, *args):
-        print("Inventory:")
+        print(self.COMMAND_MDG)
         for item in barista_service.get_inventory():
             print(f"{item.name},{item.get_available_quantity()}")
 
 
 class PrintMenu(Command):
+    COMMAND_MSG = "Menu:"
+
     def dispatch(self, barista_service, *args):
-        print("Menu:")
+        print(self.COMMAND_MSG)
         for reference, drink in barista_service.get_menu():
             print(f"{reference},{drink.name},${drink.get_cost():.2f},{str(drink.can_be_dispensed()).lower()}")
 
