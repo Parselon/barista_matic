@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  app: 
+    build:
+      context: .
+    volumes:  # Mount code
+      - ./barista_matic:/app/barista_matic
+      - dev-db-data:/var/lib/data/
+    environment:
+      - DB=sqlite:////var/lib/data/barista_matic.db
+volumes:
+  dev-db-data:
