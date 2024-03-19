@@ -17,11 +17,11 @@ class AbstractRepository(ABC):
         pass
 
     @abstractmethod
-    def add_ingredient(self):
+    def add_ingredient(self, ingredient: model.Ingredient):
         pass
 
     @abstractmethod
-    def add_drink(self):
+    def add_drink(self, drink: model.Drink):
         pass
 
     @abstractmethod
