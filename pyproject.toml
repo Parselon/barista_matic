@@ -8,11 +8,17 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.9"
 sqlalchemy = "^2.0.28"
+alembic = "^1.13.1"
+sqlalchemy-utils = "^0.41.1"
 
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.1.1"
 pytest-timeout = "^2.3.1"
+
+[tool.poetry.scripts]
+baristamatic_cli = "barista_matic.run:main"
+ensure_db = "barista_matic.run:create_db_file_if_not_exists"
 
 [build-system]
 requires = ["poetry-core"]
