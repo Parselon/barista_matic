@@ -1,5 +1,3 @@
-from typing import Iterable
-
 import pytest
 
 from barista_matic.domain import (
@@ -14,7 +12,9 @@ def when_the_drink_is_dispensed(a_drink: model.Drink):
 
 
 def then_the_ingredient_has_the_expected_quantity(an_ingredient, expected_quantity):
-    assert an_ingredient.get_available_quantity() == expected_quantity, f"The ingredient {an_ingredient} has not the expected quantity {expected_quantity}"
+    assert an_ingredient.get_available_quantity() == expected_quantity, (
+        f"The ingredient {an_ingredient} has not the expected quantity {expected_quantity}"
+    )
 
 
 def then_the_drink_has_the_expected_cost(a_drink, expected_cost):

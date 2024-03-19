@@ -1,6 +1,5 @@
 from abc import (
     ABC,
-    abstractclassmethod,
     abstractmethod,
 )
 from collections import defaultdict

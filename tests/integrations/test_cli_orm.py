@@ -11,7 +11,6 @@ from barista_matic.adapters.orm import (
 )
 from barista_matic.adapters.repository import SQLAlchemyRepository
 from barista_matic.domain import model
-from barista_matic.service_layer import services
 from tests import helpers
 
 

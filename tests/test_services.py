@@ -20,8 +20,6 @@ def given_a_baristamatic_with_fake_repository(ingredients=None, drinks=None):
     return helpers.given_a_baristamatic_service_with_repository(repository)
 
 
-
-
 def then_the_ingredient_has_the_expected_stock(ingredient, expected_stock):
     assert ingredient.get_available_quantity() == expected_stock
 
@@ -69,11 +67,11 @@ def test_barista_matic_service_get_menu_returns_a_menu_with_drinks():
     helpers.then_the_barista_matic_has_the_expected_menu(
         barista_matic,
         services.Menu({"1": drink_2, "2": drink_1})
-    ) 
+    )
 
 
 def test_barista_matic_service_dispense_drink_by_menu_reference():
-    class FakeDrink(model.Drink): 
+    class FakeDrink(model.Drink):
         dispensed : bool = False
 
         def dispense(self):

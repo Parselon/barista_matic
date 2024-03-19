@@ -11,7 +11,9 @@ from barista_matic.adapters import repository
 from barista_matic.domain import model
 
 
-def sort_by_attribute(items: Iterable[Union[model.Ingredient, model.Drink]], attribute: str) -> Iterable[Union[model.Ingredient, model.Drink]]:
+def sort_by_attribute(
+    items: Iterable[Union[model.Ingredient, model.Drink]], attribute: str
+) -> Iterable[Union[model.Ingredient, model.Drink]]:
     """Sort items by the specified attribute
 
     Args:
@@ -108,7 +110,7 @@ class BaristaMatic:
         sorted_drinks = sort_by_attribute(
             self.repository.get_drinks(),
             "name"
-        ) 
+        )
         return Menu.from_iterable(sorted_drinks)
 
     def dispense_drink_by_menu_reference(self, reference: str) -> model.Drink:

@@ -8,10 +8,8 @@ from sqlalchemy_utils import (
     database_exists,
 )
 
-from barista_matic.adapters.orm import (
-    metadata,
-    start_mappers,
-)
+from barista_matic.adapters.orm import start_mappers
+
 from barista_matic.adapters.repository import SQLAlchemyRepository
 from barista_matic.entrypoints.interactive_cli import InteractiveCli
 from barista_matic.service_layer.services import BaristaMatic
@@ -23,11 +21,10 @@ def get_engine():
 
 def run_interactive_cli():
     engine = get_engine()
-    #metadata.create_all(engine)
     start_mappers()
     session = sessionmaker(engine)()
     repository = SQLAlchemyRepository(session)
-    barista_matic = BaristaMatic(repository) 
+    barista_matic = BaristaMatic(repository)
     cli = InteractiveCli(barista_matic)
     cli.execute()
 

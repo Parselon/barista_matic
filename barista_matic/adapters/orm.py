@@ -9,7 +9,6 @@ from sqlalchemy import (
 from sqlalchemy.orm import (
     registry,
     relationship,
-    sessionmaker,
 )
 
 from barista_matic.domain import model
