@@ -1,32 +1,6 @@
-import pytest
-from sqlalchemy import create_engine
-from sqlalchemy.orm import (
-    clear_mappers,
-    sessionmaker,
-)
-
 from barista_matic.adapters import repository
-from barista_matic.adapters.orm import (
-    metadata,
-    start_mappers,
-)
 from barista_matic.domain import model
-from barista_matic.service_layer import services
 from tests import helpers
-
-
-@pytest.fixture
-def in_memory_db():
-    engine = create_engine("sqlite://")
-    metadata.create_all(engine)
-    start_mappers()
-    yield engine
-    clear_mappers()
-
-
-@pytest.fixture
-def session(in_memory_db):
-    return sessionmaker(in_memory_db)()
 
 
 def given_a_baristamatic_with_sqlalchemy_repository(session, ingredients=None, drinks=None):
@@ -61,7 +35,7 @@ def test_barista_matic_service_get_menu_returns_a_menu_with_drinks(session):
 
     helpers.then_the_barista_matic_has_the_expected_menu(
         barista_matic,
-        services.Menu({"1": drink_2, "2": drink_1})
+        model.Menu({"1": drink_2, "2": drink_1})
     )
 
 

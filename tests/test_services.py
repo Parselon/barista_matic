@@ -5,7 +5,6 @@ from barista_matic.domain import (
     exceptions,
     model,
 )
-from barista_matic.service_layer import services
 from tests import helpers
 
 
@@ -43,7 +42,7 @@ def test_barista_matic_service_get_inventory_returns_ordered_ingredients():
 def test_barista_get_menu_on_empty_repository():
     barista_matic = given_a_baristamatic_with_fake_repository()
 
-    helpers.then_the_barista_matic_has_the_expected_menu(barista_matic, services.Menu({}))
+    helpers.then_the_barista_matic_has_the_expected_menu(barista_matic, model.Menu({}))
 
 
 def test_barista_matic_service_get_menu_returns_a_menu_with_drinks():
@@ -66,7 +65,7 @@ def test_barista_matic_service_get_menu_returns_a_menu_with_drinks():
 
     helpers.then_the_barista_matic_has_the_expected_menu(
         barista_matic,
-        services.Menu({"1": drink_2, "2": drink_1})
+        model.Menu({"1": drink_2, "2": drink_1})
     )
 
 
@@ -92,7 +91,7 @@ def test_barista_matic_service_dispense_drink_by_menu_reference():
 def test_barista_matic_error_when_drink_not_exists_by_reference():
     barista_matic = given_a_baristamatic_with_fake_repository()
 
-    with pytest.raises(services.InvalidSelectedDrink):
+    with pytest.raises(exceptions.InvalidSelectedDrink):
         helpers.when_the_barista_dispense_a_drink_by_reference(barista_matic, "1")
 
 

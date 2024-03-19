@@ -9,7 +9,6 @@ from sqlalchemy_utils import (
 )
 
 from barista_matic.adapters.orm import start_mappers
-
 from barista_matic.adapters.repository import SQLAlchemyRepository
 from barista_matic.entrypoints.interactive_cli import InteractiveCli
 from barista_matic.service_layer.services import BaristaMatic

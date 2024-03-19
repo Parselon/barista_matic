@@ -1,7 +1,5 @@
-from dataclasses import dataclass
 from operator import attrgetter
 from typing import (
-    Dict,
     Iterable,
     Tuple,
     Union,
@@ -29,60 +27,6 @@ def sort_by_attribute(
     )
 
 
-class InvalidSelectedDrink(ValueError):
-    pass
-
-
-@dataclass
-class Menu:
-    """Represents the menu, it will assing a drink reference for the available drinks"""
-    menu_items: Dict[str, model.Drink]
-
-    @classmethod
-    def from_iterable(cls, drinks: Iterable[model.Drink]) -> "Menu":
-        """Create the menu from the drink list. Also will assign automatically a reference.
-
-        Args:
-            drinks (Iterable[model.Drink]): List of drinks
-
-        Returns:
-            [Menu]: A menu for the specified drinks
-        """
-        return cls(
-            {str(reference): drink for reference, drink in enumerate(drinks, start=1)}
-        )
-
-    def has_reference(self, reference: str) -> bool:
-        """Check if the reference exists in the menu
-
-        Args:
-            reference (str): The drink reference
-
-        Returns:
-            bool: Exists in the menu?
-        """
-        return reference in self.menu_items
-
-    def get_drink_by_reference(self, reference: str) -> model.Drink:
-        """Get the drink by menu reference
-
-        Args:
-            reference (str): A valis menu reference
-
-        Raises:
-            InvalidSelectedDrink: If the reference is not valid for the menu
-
-        Returns:
-            model.Drink: The drink with the specified reference
-        """
-        if reference not in self.menu_items:
-            raise InvalidSelectedDrink("Drink is")
-        return self.menu_items[reference]
-
-    def __iter__(self):
-        return iter(self.menu_items.items())
-
-
 class BaristaMatic:
     """Barista Matic service. Depends on a repository, to get ingredients and drinks"""
     def __init__(self, repository: repository.AbstractRepository):
@@ -101,17 +45,17 @@ class BaristaMatic:
             )
         )
 
-    def get_menu(self) -> Menu:
+    def get_menu(self) -> model.Menu:
         """Return the menu based on existing drinks
 
         Returns:
-            Menu: The menu
+            model.Menu: The menu
         """
         sorted_drinks = sort_by_attribute(
             self.repository.get_drinks(),
             "name"
         )
-        return Menu.from_iterable(sorted_drinks)
+        return model.Menu.from_iterable(sorted_drinks)
 
     def dispense_drink_by_menu_reference(self, reference: str) -> model.Drink:
         """Dispense the drink by reference. Use the repository for atomicity.

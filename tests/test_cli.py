@@ -6,14 +6,13 @@ from barista_matic.domain import (
     exceptions,
     model,
 )
-from barista_matic.service_layer.services import Menu
 from tests import helpers
 
 
 def given_a_mocked_baristamatic_service(inventory=None, menu=None):
     barista_matic = mock.Mock()
     barista_matic.get_inventory.return_value = inventory or set()
-    barista_matic.get_menu.return_value = menu or Menu({})
+    barista_matic.get_menu.return_value = menu or model.Menu({})
     return barista_matic
 
 
@@ -47,7 +46,7 @@ def test_cli_prints_menu_in_the_expected_format(monkeypatch, capsys):
         "a drink",
         (model.DrinkIngredient(model.Ingredient("", 1, 5), 3), )
     )
-    barista_matic = given_a_mocked_baristamatic_service(menu=Menu({"1": drink}))
+    barista_matic = given_a_mocked_baristamatic_service(menu=model.Menu({"1": drink}))
 
     cli = helpers.given_an_interactive_cli_for_barista_service(barista_matic)
 
@@ -85,7 +84,7 @@ def test_cli_dispense_drink_prints_dispensed(monkeypatch, capsys):
         "a drink",
         (model.DrinkIngredient(model.Ingredient("", 3, 5.0), 3), )
     )
-    barista_matic = given_a_mocked_baristamatic_service(menu=Menu({DRINK_REFERENCE: drink}))
+    barista_matic = given_a_mocked_baristamatic_service(menu=model.Menu({DRINK_REFERENCE: drink}))
     barista_matic.dispense_drink_by_menu_reference.return_value = drink
 
     cli = helpers.given_an_interactive_cli_for_barista_service(barista_matic)
@@ -105,7 +104,7 @@ def test_cli_dispense_drink_prints_out_of_stock(monkeypatch, capsys):
         (model.DrinkIngredient(model.Ingredient("", 1, 5.0), 3), )
     )
 
-    barista_matic = given_a_mocked_baristamatic_service(menu=Menu({"1": drink}))
+    barista_matic = given_a_mocked_baristamatic_service(menu=model.Menu({"1": drink}))
     barista_matic.dispense_drink_by_menu_reference.side_effect = exceptions.OutOfStock("", drink=drink)
 
     cli = helpers.given_an_interactive_cli_for_barista_service(barista_matic)

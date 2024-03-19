@@ -6,4 +6,8 @@ class OutOfStock(ValueError):
 
 
 class DrinkNotExist(ValueError):
-    """"""
+    """Drink doesn't exists"""
+
+
+class InvalidSelectedDrink(ValueError):
+    """The selection is invalid"""
