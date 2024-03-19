@@ -1,4 +1,26 @@
 # Barista-matic Programming Assignment
+## Problem resolution notes
+* As I consider unit tests a crucial part of the development, I added unit and integrations tests (marked in the exersise as not required)
+* Followed an arquitecture where the business logic is separated from the implementation details, with the advantages:
+    * System is testeable, using fakes to test without worrying about implementation details.
+    * Using the repository pattern can easily add new repositories. In this solution a repository for relational db was provided, but it can be easily adapted for use a non-relational database, and provide another way to handle the system, like event sourcing db.
+    * Using service layer to easily connect with entrypoints, a cli was asked, but this can be easily adapted to use a rest api.
+* As the problem was solved with relational db (file-based sqlite db), migrations with alembic was provided to create db structure and initial data. Also minor changes are required to change to postgresql e.g.
+* Used poetry to handle dependencies
+* Added basic docker and docker compose files to test the system
+* Used a gherking language for test (given, when, then) to provide readability to the test, and create reusable functions based on the functionality
+
+## How to run it
+Using docker compose to ensure environment replication
+
+`make build` or `docker compose build` to build the system
+
+`make run-tests` or `docker compose run --rm app sh -c "poetry run flake8 && poetry run pytest"` will run linters and pytest
+
+`make run` or `docker compose run --rm app sh -c "./run.sh", create a volume with the db, run migrations to provide initial data and runs the interactive cli
+
+Done with python3.9 and poetry 1.8.2
+
 ## PROBLEM DESCRIPTION:
 Your task is to create a simulator of an automatic coffee dispensing machine, called the Baristamatic.
 The machine maintains an inventory of drink ingredients, and is able to dispense a fixed set of

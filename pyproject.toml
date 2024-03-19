@@ -10,6 +10,7 @@ python = "^3.9"
 sqlalchemy = "^2.0.28"
 alembic = "^1.13.1"
 sqlalchemy-utils = "^0.41.1"
+mypy = "^1.9.0"
 
 
 [tool.poetry.group.test.dependencies]
