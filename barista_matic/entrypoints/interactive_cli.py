@@ -1,3 +1,4 @@
+import contextlib
 from abc import (
     ABC,
     abstractmethod,
@@ -74,7 +75,7 @@ class InteractiveCli:
     def __init__(self, barista_service):
         self.barista_service = barista_service
 
-    def get_command_for_user_input(self, user_input, menu):
+    def get_command_for_user_input(self, user_input, menu) -> Command:
         if menu.has_reference(user_input):
             return command_mapping["DISPENSE"]
         return command_mapping[user_input]
@@ -85,14 +86,22 @@ class InteractiveCli:
     def print_menu(self):
         PrintMenu().dispatch(self.barista_service)
 
-    def get_valid_user_input(self):
+    def get_valid_user_input(self) -> str:
+        """Get user input, ignore if it's empty.
+
+        Returns:
+            str: User input
+        """
         user_input = ""
         while user_input in self.INPUTS_TO_IGNORE:
             user_input = input("").strip().lower()
         return user_input
 
     def execute(self):
-        try:
+        """Run the interactive cli.
+        Prints inventory and menu, wait for user input and run it, until user exited.
+        """
+        with contextlib.suppress(UserExited):  # On UserExited, loop will break
             while True:
                 self.print_inventory()
                 self.print_menu()
@@ -102,5 +111,3 @@ class InteractiveCli:
                     self.barista_service.get_menu()
                 )
                 command.dispatch(self.barista_service, user_input)
-        except UserExited:
-            pass
