@@ -5,6 +5,7 @@
     * System is testeable, using fakes to test without worrying about implementation details.
     * Using the repository pattern can easily add new repositories. In this solution a repository for relational db was provided, but it can be easily adapted for use a non-relational database, and provide another way to handle the system, like event sourcing db.
     * Using service layer to easily connect with entrypoints, a cli was asked, but this can be easily adapted to use a rest api.
+    * Cons: It may be over-engineering for systems that do not vary much
 * As the problem was solved with relational db (file-based sqlite db), migrations with alembic was provided to create db structure and initial data. Also minor changes are required to change to postgresql e.g.
 * Used poetry to handle dependencies
 * Added basic docker and docker compose files to test the system
