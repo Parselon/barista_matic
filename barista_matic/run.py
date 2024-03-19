@@ -1,4 +1,3 @@
-import os
 import sys
 
 from sqlalchemy import create_engine
@@ -13,7 +12,7 @@ from barista_matic.adapters.repository import SQLAlchemyRepository
 from barista_matic.entrypoints.interactive_cli import InteractiveCli
 from barista_matic.service_layer.services import BaristaMatic
 
-from . import settings
+from barista_matic import settings
 
 
 def get_engine():
