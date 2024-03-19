@@ -6,7 +6,7 @@ build:
 
 run-tests:
 	@echo "Running tests"
-	docker compose run --rm app sh -c "poetry run pytest"
+	docker compose run --rm app sh -c "poetry run flake8 && poetry run pytest"
 
 run:
 	@echo "Running interactive cli"
