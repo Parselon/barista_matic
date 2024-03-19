@@ -2,9 +2,10 @@ from typing import Iterable
 
 import pytest
 
-from barista_matic.domain import model
-from barista_matic.domain import exceptions
-
+from barista_matic.domain import (
+    exceptions,
+    model,
+)
 from tests import helpers
 
 

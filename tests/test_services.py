@@ -1,10 +1,11 @@
 import pytest
 
-from barista_matic.service_layer import services
 from barista_matic.adapters.repository import FakeRepository
-from barista_matic.domain import model
-from barista_matic.domain import exceptions
-
+from barista_matic.domain import (
+    exceptions,
+    model,
+)
+from barista_matic.service_layer import services
 from tests import helpers
 
 

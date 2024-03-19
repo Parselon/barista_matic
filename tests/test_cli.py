@@ -1,9 +1,12 @@
-import pytest
 from unittest import mock
-from barista_matic.service_layer.services import Menu
-from barista_matic.domain import model
-from barista_matic.domain import exceptions
 
+import pytest
+
+from barista_matic.domain import (
+    exceptions,
+    model,
+)
+from barista_matic.service_layer.services import Menu
 from tests import helpers
 
 

@@ -1,12 +1,17 @@
 import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import (
+    clear_mappers,
+    sessionmaker,
+)
 
 from barista_matic.adapters import repository
-from barista_matic.adapters.orm import start_mappers, metadata
+from barista_matic.adapters.orm import (
+    metadata,
+    start_mappers,
+)
 from barista_matic.domain import model
 from barista_matic.service_layer import services
-from sqlalchemy import create_engine
-from sqlalchemy.orm import clear_mappers, sessionmaker
-
 from tests import helpers
 
 

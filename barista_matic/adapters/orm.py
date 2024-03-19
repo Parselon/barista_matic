@@ -1,5 +1,16 @@
-from sqlalchemy import Table, Column, Integer, String, ForeignKey, Float
-from sqlalchemy.orm import registry, sessionmaker, relationship
+from sqlalchemy import (
+    Column,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    Table,
+)
+from sqlalchemy.orm import (
+    registry,
+    relationship,
+    sessionmaker,
+)
 
 from barista_matic.domain import model
 

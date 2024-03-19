@@ -1,15 +1,20 @@
-import sys
 import os
+import sys
 
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from sqlalchemy_utils import database_exists, create_database
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy_utils import (
+    create_database,
+    database_exists,
+)
 
+from barista_matic.adapters.orm import (
+    metadata,
+    start_mappers,
+)
+from barista_matic.adapters.repository import SQLAlchemyRepository
 from barista_matic.entrypoints.interactive_cli import InteractiveCli
 from barista_matic.service_layer.services import BaristaMatic
-from barista_matic.adapters.repository import SQLAlchemyRepository
-
-from barista_matic.adapters.orm import start_mappers, metadata
 
 
 def get_engine():

@@ -1,9 +1,14 @@
 from dataclasses import dataclass
-from typing import Dict, Tuple, Union, Iterable
 from operator import attrgetter
+from typing import (
+    Dict,
+    Iterable,
+    Tuple,
+    Union,
+)
 
-from barista_matic.domain import model
 from barista_matic.adapters import repository
+from barista_matic.domain import model
 
 
 def sort_by_attribute(items: Iterable[Union[model.Ingredient, model.Drink]], attribute: str) -> Iterable[Union[model.Ingredient, model.Drink]]:

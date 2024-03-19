@@ -1,7 +1,8 @@
 from typing import Iterable
+
 from barista_matic.domain import model
-from barista_matic.service_layer import services
 from barista_matic.entrypoints.interactive_cli import InteractiveCli
+from barista_matic.service_layer import services
 
 
 def given_an_ingredient(name="an ingredient", quantity=10, unit_cost=1) -> model.Ingredient:

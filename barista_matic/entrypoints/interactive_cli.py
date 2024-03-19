@@ -1,8 +1,11 @@
+from abc import (
+    ABC,
+    abstractclassmethod,
+    abstractmethod,
+)
 from collections import defaultdict
 
 from barista_matic.domain import exceptions
-
-from abc import ABC, abstractmethod, abstractclassmethod
 
 
 class UserExited(Exception):
